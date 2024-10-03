@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+//exporting a user model, based on the schema
 export const UserModel = mongoose.model("User", UserSchema);
 
 //actions

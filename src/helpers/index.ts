@@ -1,6 +1,10 @@
 import crypto from "crypto";
+import dotenv from "dotenv";
 
-const SECRET = "REST_API_SECRET";
+dotenv.config();
+
+const SECRET = process.env.REST_API_SECRET;
+console.log(SECRET);
 
 export const random = () => crypto.randomBytes(128).toString("base64");
 export const authentication = (salt: string, password: string) => {

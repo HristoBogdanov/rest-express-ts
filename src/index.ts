@@ -5,6 +5,11 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
 import mongoose from "mongoose";
+import router from "./router";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 
@@ -25,11 +30,13 @@ server.listen(8080, () => {
   console.log("Server started on http://localhost:8080");
 });
 
-const MONGO_URL =
-  "mongodb+srv://hristo:0878782155Ba@cluster0.mvidc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const MONGO_URL = process.env.MONGO_URL;
 
+//mongoose configuration
 mongoose.Promise = global.Promise;
 mongoose.connect(MONGO_URL);
 mongoose.connection.on("error", (error: Error) => {
   console.log(error);
 });
+
+app.use("/", router());
