@@ -43,6 +43,7 @@ export const isAuthenticated = async (
       return res.status(403).send({ error: "Unauthorized" });
     }
 
+    //adds the user information to the request under the identity key
     merge(req, { identity: existingUser });
 
     return next();

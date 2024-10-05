@@ -1,6 +1,7 @@
 import express from "express";
 import { createUser, getUserByEmail } from "../db/users";
 import { authentication, random } from "../helpers";
+import { sessionTokenAge } from "../lib/constants";
 
 export const login = async (req: express.Request, res: express.Response) => {
   try {
@@ -19,6 +20,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     }
 
     const expectedHash = authentication(user.authentication.salt, password);
+    //wrong password
     if (user.authentication.password !== expectedHash) {
       return res.sendStatus(403);
     }
@@ -38,6 +40,7 @@ export const login = async (req: express.Request, res: express.Response) => {
       httpOnly: true, //cannot be accessed by JavaScript, XSS protection
       secure: false, //in production, set to true for HTTPS
       sameSite: "strict", //protects against CSRF
+      maxAge: sessionTokenAge, //how long the cookies is valid
     });
 
     return res.status(200).json(user).end();

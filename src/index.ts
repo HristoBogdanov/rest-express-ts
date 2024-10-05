@@ -30,9 +30,9 @@ server.listen(8080, () => {
   console.log("Server started on http://localhost:8080");
 });
 
+//mongoose configuration
 const MONGO_URL = process.env.MONGO_URL;
 
-//mongoose configuration
 mongoose.Promise = global.Promise;
 mongoose.connect(MONGO_URL);
 mongoose.connection.on("error", (error: Error) => {
